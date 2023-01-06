@@ -5,6 +5,7 @@ package com.ysy.task;
  * @description： 类描述
  * @date 2021/2/26 16:39
  */
+
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
@@ -14,20 +15,24 @@ import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-// 演示例子，执行 main 方法控制台输入模块表名回车自动生成对应项目目录中
 public class CodeGenerator {
+
+    @Autowired
+    private DataSourceProperties dataSourceProperties;
 
     /**
      * <p>
      * 读取控制台内容
      * </p>
      */
-    public static String scanner(String tip) {
+    private String scanner(String tip) {
         Scanner scanner = new Scanner(System.in);
         StringBuilder help = new StringBuilder();
         help.append("请输入" + tip + "：");
@@ -41,7 +46,7 @@ public class CodeGenerator {
         throw new MybatisPlusException("请输入正确的" + tip + "！");
     }
 
-    public static void main(String[] args) {
+    private void getCode() {
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
 
@@ -58,11 +63,11 @@ public class CodeGenerator {
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://localhost:3306/taskmanage?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=UTC");
+        dsc.setUrl(dataSourceProperties.getUrl());
         // dsc.setSchemaName("public");
-        dsc.setDriverName("com.mysql.cj.jdbc.Driver");
-        dsc.setUsername("root");
-        dsc.setPassword("8090");
+        dsc.setDriverName(dataSourceProperties.getDriverClassName());
+        dsc.setUsername(dataSourceProperties.getUsername());
+        dsc.setPassword(dataSourceProperties.getPassword());
         mpg.setDataSource(dsc);
 
         // 包配置
@@ -117,5 +122,10 @@ public class CodeGenerator {
         mpg.setStrategy(strategy);
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
         mpg.execute();
+    }
+
+    public static void main(String[] args) {
+        CodeGenerator codeGenerator = new CodeGenerator();
+        codeGenerator.getCode();
     }
 }
