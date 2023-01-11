@@ -1,11 +1,14 @@
 package com.ysy.task.service;
 
-import com.ysy.task.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ysy.task.dto.UserAddDTO;
+import com.ysy.task.entity.User;
+
+import java.util.List;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author yaosy
@@ -13,4 +16,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface UserService extends IService<User> {
 
+    boolean saveEsUser(UserAddDTO dto);
+
+    List<User> getEsUserAll();
 }

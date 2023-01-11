@@ -4,6 +4,11 @@ spring:
     url: jdbc:mysql://120.77.93.244:3306/task?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
     username: root
     password: 8090
+elasticsearch:
+  host: 120.77.93.244
+  port: 9200
+  username: admin
+  password: 8090
 shiro-redis:
   enabled: true
   redis-manager:
