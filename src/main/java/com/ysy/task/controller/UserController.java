@@ -5,11 +5,14 @@ import com.ysy.task.common.lang.Result;
 import com.ysy.task.dto.UserAddDTO;
 import com.ysy.task.entity.User;
 import com.ysy.task.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * <p>
@@ -22,34 +25,43 @@ import javax.validation.constraints.NotNull;
 @RestController
 @RequestMapping("/user")
 @Validated
+@Api("用户管理")
 public class UserController {
     @Autowired
     UserService userService;
 
     @GetMapping("/index")
-    public Object index() {
+    public Result<User> index() {
         User user = userService.getById(1);
         return Result.succ(200, "成功", user);
     }
 
     @GetMapping("/{id}")
-    public Object test(@PathVariable("id") Long id) {
+    public Result<User> test(@PathVariable("id") Long id) {
         User user = userService.getById(id);
-        return Result.succ(200, "成功", user);
+        return Result.succ(user);
     }
 
-    @PostMapping("/es")
-    public Object addEsUser(@NotNull @RequestBody(required = false) UserAddDTO dto) {
-        return Result.succ(200, "成功", userService.saveEsUser(dto));
+    @PostMapping("/es/add")
+    @ApiOperation("es新增用户")
+    public Result<Boolean> addEsUser(@NotNull @RequestBody(required = false) UserAddDTO dto) {
+        return Result.succ(userService.saveEsUser(dto));
     }
 
-    @GetMapping("/all")
-    public Object getEsUserAll() {
-        return Result.succ(200, "成功", userService.getEsUserAll());
+    @GetMapping("/es/all")
+    @ApiOperation("es获取全部用户")
+    public Result<List<User>> getEsUserAll() {
+        return Result.succ(userService.getEsUserAll());
+    }
+
+    @GetMapping("/es/search")
+    @ApiOperation("es查询用户")
+    public Result<Object> searchEsUser() {
+        return Result.succ(userService.searchEsUser());
     }
 
     @PostMapping("/save")
-    public Object save(@Validated @RequestBody User user) {
+    public Result<User> save(@Validated @RequestBody User user) {
         return Result.succ(user);
     }
 

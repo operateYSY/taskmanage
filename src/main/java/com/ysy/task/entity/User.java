@@ -8,7 +8,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
@@ -41,7 +40,7 @@ public class User implements Serializable {
     private Long id;
 
     @NotBlank(message = "昵称不能为空")
-    @Field(type = FieldType.Text)
+    @Field(type = FieldType.Text, analyzer = "ik_smart", searchAnalyzer = "ik_max_word")
     @ApiModelProperty(value = "用户名称")
     private String userName;
 

@@ -23,10 +23,10 @@ import org.springframework.data.elasticsearch.config.AbstractElasticsearchConfig
 @Configuration
 @ConfigurationProperties(prefix = "elasticsearch")
 public class ElasticsearchConfig extends AbstractElasticsearchConfiguration {
-    private String host;
-    private Integer port;
-    private String password;
-    private String username;
+    private String host = "120.77.93.244";
+    private Integer port = 9200;
+    private String password = "8090";
+    private String username = "admin";
 
     @Override
     public RestHighLevelClient elasticsearchClient() {

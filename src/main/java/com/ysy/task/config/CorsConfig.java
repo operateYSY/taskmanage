@@ -5,7 +5,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * @author Yaosy5
- * @description： 类描述
+ * @description： 跨域配置
  * @date 2021/3/15 17:31
  */
 public class CorsConfig implements WebMvcConfigurer {

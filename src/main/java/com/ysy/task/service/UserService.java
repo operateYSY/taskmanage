@@ -16,7 +16,9 @@ import java.util.List;
  */
 public interface UserService extends IService<User> {
 
-    boolean saveEsUser(UserAddDTO dto);
+    Boolean saveEsUser(UserAddDTO dto);
 
     List<User> getEsUserAll();
+
+    Object searchEsUser();
 }
